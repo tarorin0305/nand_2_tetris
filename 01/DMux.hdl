@@ -14,5 +14,14 @@ CHIP DMux {
     OUT a, b;
 
     PARTS:
-    // Put your code here:
+    // selが0なら...
+        // inが0ならaに0を出力
+        // inが1ならaに1を出力
+    // selが1なら...
+        // inが0ならbに0を出力
+        // inが1ならbに1を出力
+    Not(in=sel, out=notsel);
+    And(a=in, b=notsel, out=a); // aにはinの値が入る。ただしselが0でないと1は入らない。
+    And(a=in, b=sel, out=b); // bにはinの値が入る。ただしselが1でないと1は入らない。
+
 }

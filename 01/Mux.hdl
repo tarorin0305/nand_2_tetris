@@ -14,5 +14,11 @@ CHIP Mux {
     OUT out;
 
     PARTS:
-    // Put your code here:
+    // selが0ならaを出力
+    // selが1ならbを出力
+    Not(in=sel, out=notsel); // selを反転
+    // Andでselやnotselと比較することで、input a, bそれぞれの値をそのまま出力させている(a, bがそれぞれビットの入力しか受け付けないことが前提)
+    And(a=a, b=notsel, out=w1); // 入力aの値をnotselと比較。selが0ならw1にaの値が入る
+    And(a=b, b=sel, out=w2); // 入力bの値をselと比較。selが1ならw2にbの値が入る。selが1なら、↑の処理でw1に0が入っている
+    Or(a=w1, b=w2, out=out);
 }
